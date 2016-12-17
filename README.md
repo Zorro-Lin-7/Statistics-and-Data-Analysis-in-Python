@@ -6,8 +6,7 @@
 浏览过的，将二者结合的博客、教程，要么太浅，要么不深入，要么不贴合应用。（天下乌鸦一般黑，老外的书名也很标题党。）
 专门适用于统计学的R语言，以及相关的好内容可能有，但《R in action》 浏览了下，暂时分不出精力，还是先专精好Python吧。
 
-后来总算找到一个Statistics in Python 的教程，非常棒，更当得起‘Python for Data Analysis’这个名头。在此，结合统计学理论、应用，付诸代码实现。
-
+后来总算找到一个Statistics in Python 的教程，非常棒，更当得起‘Python for Data Analysis’这个名头。因为自身学习需求，在此梳理及融会所学的统计学理论、应用、代码实现。
 涉及的包：Numpy/ Pandas/ Scipy/ Sklearn
 
 ### [1-初始数据探索](https://github.com/Zorro-Lin-7/Statistics-and-Data-Analysis-in-Python/blob/master/Statistics%20in%20Python/14-%E5%88%9D%E5%A7%8B%E6%95%B0%E6%8D%AE%E6%8E%A2%E7%B4%A2.ipynb)
