@@ -9,6 +9,7 @@
 后来总算找到一个Statistics in Python 的教程，非常棒，更当得起‘Python for Data Analysis’这个名头。因为自身学习需求，在此梳理及融会所学的统计学理论、应用、代码实现。
 涉及的包：Numpy/ Pandas/ Scipy/ Sklearn
 
+## 目录
 ### [1-初始数据探索](https://github.com/Zorro-Lin-7/Statistics-and-Data-Analysis-in-Python/blob/master/Statistics%20in%20Python/14-%E5%88%9D%E5%A7%8B%E6%95%B0%E6%8D%AE%E6%8E%A2%E7%B4%A2.ipynb)
 * 原则：从少到多，快速启动，迭代优化
 * 阅读、观察数据（维度、变量类型、数量、统计汇总、缺失值）
