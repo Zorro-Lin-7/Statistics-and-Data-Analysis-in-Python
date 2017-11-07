@@ -59,6 +59,12 @@ df.insert() # 插入某列
 
 
 # Chapter 2
+#拿到一个数据集后，可能需要重新排“列”——离散、连续；含缺失、无缺失；数值、非数值；等等。
+# 排列规则并无标准，比如：
+# 1、区分一列是离散或连续  需要自己一个一个去看
+# 2、在离散或连续列中，再细分组
+# 3、 重要的组放前面，其中类别列放连续值列前面
+
 
 # 选取多列——[[]]
 # tuple 的逗号可省略：
@@ -77,7 +83,7 @@ movie.select_dtypes(include=['object'])
 movie.filter(like='facebook',axis=0)
 movie.filter(regex='\d', axis=0)
 
-set()
+
 
 pd.option.display.max_rows = 10
 
@@ -85,7 +91,14 @@ movie.describe(percentiles=[.01, .3, .99])
 
 movie.min(skipna=False)
 
+# 参数axis=1，可以想象新增1列；axis=0,新增1行；
+
 .cumsum(axis=1) #累加
 
-.ge(.15)?
-.eq()?
+pd.set_option('precision',n) # 显示时，保留小数位数
+# 保留2位小数：地板除
+df // 0.01 / 100
+
+# 2个df是否一致，不能用==，因为NA无法比较，用df1.equals(df2)
+
+
