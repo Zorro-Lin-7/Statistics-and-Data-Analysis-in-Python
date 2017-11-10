@@ -1,4 +1,8 @@
 # Note 1
+
+# Jupyter 索引操作：
+[](#)
+
 pd.set_option('max_columns',8,'max_rows',10)
 movie.get_dtype_counts()
 Series.to_frame()
@@ -108,4 +112,21 @@ df // 0.01 / 100
 # 新增一行：
 df.loc['行名']= 
 
+# Note 3
+
+## 探索性数据分析EDA
+数据可以分为连续型变量和类别型变量。连续型数据一定值数值型的，分类变量是离散型的。
+
+###汇总统计：类别变量；转置操作；
+df.describe(include=[np.object, pd.Categorical]).T  # 转置操作可以增强可读性，当列很多时
+
+### Data Dictionaries很重要，合作必需。
+
+## 改变数据类型，节省内存
+df.col.memory_usage(deep=True)             # 每列占用的内存
+df['clo2'] = df['col2'].astype(np.int8)                 # 只有0/1 2个值的，可以转化为8-bit integer
+
+### object -> categorical，当该列有比较低的基数(number of unique values)
+df.select_dtypes(include=['object']).nunique()   # 查看唯一值的个数，< 1%可以考虑转换类型
+df['col3'] = df['col3'].astype('category')
 
