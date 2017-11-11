@@ -124,6 +124,24 @@ df.select_dtypes(include=['object']).nunique()   # 查看唯一值的个数，< 
                                                  #注：object类型不像其他数据类型，并不是列中的每个值都是同一类型；它像一个catchall，可能包罗各种类型。
 df['col3'] = df['col3'].astype('category')
 
+#注：Python3 采用Unicode编码，每个字符占4 bytes；Pandas 一列内存>100 bytes，则超出的每个字符占5 bytes
+#注：如果某数值列含有缺失值，该列类型必是 float64; Integer 数据类型会自动变为 float，如果它有了缺失值，
+#    也因此，无法 .astype(np.int8)——ValueError: Cannot convert non-finite value (NA or inf) to integer.
+# RangeIndex 是占内存最小的数据类型，若变成Int64Index，内存需求放大巨多：
+>>> df.index = pd.Int64Index(df.index)
+
+## 选择A值top100的行，A值top100且B值button5 的行
+df.nlargest(100,'A',keep=False)  # 但该参数可能有问题，可能未修复。
+df.nlargest(100,'A').nsmallest(50,'B')
+
+## 多级排列再筛选
+df_sorted = df.sort_values(['A','B','C'],ascending=[False,True,False]).head()
+
+# 累计更大值、累加、累乘
+df['A'].cummax()
+df['A'].cumsum()
+
+
 
 
 
@@ -132,3 +150,15 @@ df['col3'] = df['col3'].astype('category')
 # 新增一行：
 df.loc['行名']= 
 
+# 查最大（小）值的索引——元素在列表中的索引（位置）
+t = [1,2,3,4,5]
+t.index(max(t))
+
+s = pd.Series(t)
+s.idxmax()
+s.idxmin()
+
+df['col'].argmax()
+
+# 一列Series是否有单调性：
+s.is_monotonic_decreasing or s.is_monotonic_increasing
