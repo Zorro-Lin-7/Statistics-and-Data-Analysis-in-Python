@@ -141,10 +141,20 @@ df_sorted = df.sort_values(['A','B','C'],ascending=[False,True,False]).head()
 df['A'].cummax()
 df['A'].cumsum()
 
+########## Note 4
+ ## 混用数值和labels进行切片，以前的版本可用.ix实现，现在的.iloc 或.loc 已无法实现：
+ >>> df.loc[:5, 'A':'Z'] # 会报错
+ >>> col_start = df.columns.get_loc('A')
+ >>> col_end = df.columns.get_loc['Z'] + 1
+ >>> df.iloc[:5, col_start:col_end] #先用.get_loc 将labels转换成integer，再用.iloc；
+ >>> df.loc[:, 'A':'Z'][:5] # 虽然能用链式连用.loc .iloc 来实现，但非常不建议。简单的尚可。
 
+## 加速计算：用.iat .at 代替 .iloc .loc 
 
-
-
+ ## index 是字母，非数值的，排序后，能用.loc 按字母顺序切片，像查字典一样
+>>> df = df.sort_index()
+>>> df.loc['Ax': 'Az']
+ # 可以用 df.index.is_monotonic_ 来检查是否顺排
 
 ##################### My practices
 # 新增一行：
@@ -160,5 +170,5 @@ s.idxmin()
 
 df['col'].argmax()
 
-# 一列Series是否有单调性：
+# 一列Series 或 index是否有单调性，即排过序，包括字母：
 s.is_monotonic_decreasing or s.is_monotonic_increasing
