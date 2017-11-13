@@ -155,7 +155,29 @@ df['A'].cumsum()
 >>> df = df.sort_index()
 >>> df.loc['Ax': 'Az']
  # 可以用 df.index.is_monotonic_ 来检查是否顺排
-
+ 
+ ########## Note 5
+ 
+ (df['A'] > 100).mean()  # 计算 > 100 的值的占比 ，该方法错误。因为 >100的结果输出是True／False ，而A中本身含有会被当作False的NaN
+ df['A'].dropna().gt(100).mean()   # 需要排除 Nan导致的False个数不准确
+ 
+ ## 可以同时比较1个df中的2列：
+ a = df[['A','B']].dropna()
+(a['A'] > a['B']).mean()
+ 
+ and: &
+ or: |
+ not: ~
+ 
+ ## 多布尔条件筛选：条件另创建变量，再合并这些变量。代码更规范整洁
+ criteria1 = df['A'] > 1
+ criteria2 = df['B'] == 'abc'
+ criteria3 = ((df['C'] < 100) | 
+              (df['C'] > 200))
+ 
+ criteria_final = criteria1 & criteria2 & criteria3
+ criteria_fianal.head()
+ 
 ##################### My practices
 # 新增一行：
 df.loc['行名']= 
