@@ -176,7 +176,44 @@ df['A'].cumsum()
               (df['C'] > 200))
  
  criteria_final = criteria1 & criteria2 & criteria3
- criteria_fianal.head()
+ criteria_final.head()
+ df[criteria_final]
+ 
+ cols = ['A','B','C']
+ df.loc[criteria3, cols]
+ 
+ ## Python中，非0整数、非空字符串、非空序列都可为布尔值True
+ 
+ # 更快地检索：
+ ## 按index检索 比布尔检索快3倍左右，但重置一列为index可能抵消。若不用重置index，可以考虑index检索。
+ df[df['A'] == 'a']
+ df2 = df.set_index('A')
+ df2.loc['a']
+ 
+ ## 当index唯一或顺排，index selection performance 大幅提升
+ ## 原理：未排序且含有重复值时，pandas需要检验index的每个值以正确选择，排序后，pandas利用binary search 算法提高性能；
+ ##      值唯一时，pandas通过hash table实现快速检索，每个索引坐标以近乎相同的耗时被查找，无论它的长度。
+ df1
+ df2 = df1.set_index('A')
+ df2.index_is_monotonic     # 检查是否单调; is_unique 检查是否唯一
+ df3 = df2.sort_index()     # index 排序
+ 
+ %timeit df1[df1['A'] == 'z']
+ %timeit df2.loc['z']
+ %timeit df3.loc['z']
+ 
+ ## 拼接多列，作为新索引
+ df.index = df['Country'] + ', ' + df['city']
+ df = df.sort_index()
+ 
+ >>> %%timeit
+ >>> crit1 = df['Country'] == 'China'
+ >>> crit2 = df['City'] == 'Beijing'
+ >>> df[crit1 & crit2]
+ 
+ >>> %timeit df.loc['China, Beijing']    # 速度快1个量级
+ 
+ 
  
 ##################### My practices
 # 新增一行：
