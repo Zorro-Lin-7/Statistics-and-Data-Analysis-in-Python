@@ -213,7 +213,32 @@ df['A'].cumsum()
  
  >>> %timeit df.loc['China, Beijing']    # 速度快1个量级
  
+ ## 按百分位选择
+ A = df['A'] # pd.Series
+ df_summary = A.describe(percentiles=[.1, .9])
+ upper_10 = A.loc['90%']  # 取得90%位的值
+ lower_10 = A.loc['10%']  # 取得10%位的值
+ criteria = (A > upper_10) | (A < lower_10)
+ A_top_bottom_10 = A[criteria]
  
+ A.plot(color='b', figsize=(12, 6)) # 折线图
+ A_top_bottome_10.plot(marker='o', style=' ', ms=4, color='r') # 点图（不连线的折线图）；ms:marker_size; 在折线图的基础上，全出各折点
+ 
+ xmin = criteria.index[0]
+ xmax = criteria.index[-1]
+ plt.hlines(y=[lower_10, upper_10], xmin=xmin, xmax=xmax, color='r')
+ 
+ ## 一些相当于SQL where 的操作: 
+   ## 主要是 .isin
+      criteria = ~df.A.isin(df.A.value_counts().index[:5]) #排除top5
+   ## 代码规范上：多个条件语句分别赋给多个变量名，再合成1个变量名：
+      criteria_city = df['city'].isin(['Beijing', 'Shanghai', 'Hangzhou'])
+      criteria_gender = df['gender'] == 'Female'
+      criteria_age = (df['age'] >= 20) & (df['Age'] <= 40) # 或者 df.age.between(20,40)
+      criteria_final = criteria_city & criteria_gender & criteria_age
+      select_columns = ['city', 'gender', 'age']
+      df.loc[criteria_final, select_columns]  # .loc[ , ]
+     
  
 ##################### My practices
 # 新增一行：
