@@ -97,9 +97,18 @@ movie.describe(percentiles=[.01, .3, .99])
 movie.min(skipna=False)
 
 # 参数axis=1，可以想象新增1列；axis=0,新增1行；
-
+# 累计统计分析函数 可以减少for循环的使用
 .cumsum(axis=1) #累加
+.cumprob()
+.cummin()
+.cummax()
 
+# 滚动计算（窗口计算）
+ .rolling(w).sum() # 依次计算相邻w个元素的和
+ .rolling(w).mean()
+ .rolling(w).var()
+
+ 
 pd.set_option('precision',n) # 显示时，保留小数位数
 # 保留2位小数：地板除
 df // 0.01 / 100
@@ -271,3 +280,9 @@ s.is_monotonic_decreasing or s.is_monotonic_increasing
  
  # Series 的.get操作
  s.get('f',100) # 若索引中没有'f'，则新增f，对应的值为100
+       
+ # 相关性分析，适用于Series, DataFrame
+       .cor()  # 计算协方差矩阵
+       .corr() # 计算相关系数矩阵，参数有Pearson、Spearman、Kendall等
+       
+ 
