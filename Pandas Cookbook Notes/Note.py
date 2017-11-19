@@ -55,10 +55,11 @@ indexes_renamed = {'a':'b'} # a 改为b
 columns_renamed = {'c': 'd'}
 df.rename(index=indexes_renamed,
           columns=columns_renamed)
+ 
           
 # 列的位置序号：
 df.columns.get_loc('column_name')
-df.insert() # 插入某列
+df.insert() # 新增、插入某列
 
 
 
@@ -157,6 +158,14 @@ df['A'].cumsum()
  # 可以用 df.index.is_monotonic_ 来检查是否顺排
  
  ########## Note 5
+ # 方法运算.add, .sub 等比直接用+ - 的好处是，可以设置参数：
+ a = pd.DataFrame(np.arange(20).reshape(4,5))
+ b = pd.Series(np.arange(4))
+ 
+ a.sub(b, 
+       axis=0 # a - b 默认为axis=1
+       fill_value= # 缺失值补齐
+ 
  
  (df['A'] > 100).mean()  # 计算 > 100 的值的占比 ，该方法错误。因为 >100的结果输出是True／False ，而A中本身含有会被当作False的NaN
  df['A'].dropna().gt(100).mean()   # 需要排除 Nan导致的False个数不准确
@@ -241,6 +250,9 @@ df['A'].cumsum()
      
  
 ##################### My practices
+ 
+ # 思想：Pandas 与Numpy的重要区别是，Pandas有索引，通过索引可以操作DataFrame的值。Numpy中不存在索引，所以所有操作必须通过维度来控制，相对复杂。
+ #      Pandas通过索引，将对一组数据的使用，简化为对索引的使用。比如差集、交集、并集。算术运算根据行、列索引（补齐后）运算
 # 新增一行：
 df.loc['行名']= 
 
@@ -256,3 +268,6 @@ df['col'].argmax()
 
 # 一列Series 或 index是否有单调性，即排过序，包括字母：
 s.is_monotonic_decreasing or s.is_monotonic_increasing
+ 
+ # Series 的.get操作
+ s.get('f',100) # 若索引中没有'f'，则新增f，对应的值为100
