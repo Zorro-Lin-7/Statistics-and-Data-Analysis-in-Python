@@ -72,7 +72,7 @@ plt.annotate(      # 在图形中增加带箭头的注解
     width=2)) 
 
 #pyplot的绘图区域
-plt.subplot(nrows, ncols, plot_number)
+plt.subplot(nrows, ncols, plot_number) # 为空时，默认为111，即1个绘图区域
 
 #例：
 plt.subplot(3,2,4)  # 定义3行2列，第4个绘图区；逗号可省略
@@ -103,7 +103,7 @@ labels = 'Frogs', 'Hogs', 'Dogs','Logs'
 sizes = [15, 30, 45, 10]  # 占比
 explode = (0, 0.1, 0, 0)
 plt.pie(sizes, explode=explode, labels=labels,
-        autopct='%1.1f%%',shadow=False, startangle=90)  # 饼图l
+        autopct='%1.1f%%',shadow=False, startangle=90)  # 饼图
 plt.axis('equal')
 
 # 例2 直方图：
@@ -118,9 +118,10 @@ plt.hist(a,
 plt.tile('Histogram')
 plt.show()
 
-# 例3：散点图
-fig, ax = plt.subplots()
-ax.plot(10*np.random.randn(100), 10*np.random.randn(100), 'o')
+# 例3：散点图 面向对象的方式绘制
+fig, ax = plt.subplots()  # 将subplots 函数变成object，分别对应函数生成的图表和图表对应的区域；
+		          #  为空时，默认为111，对应的绘图区域（即当前的绘图区域）是ax
+ax.plot(10*np.random.randn(100), 10*np.random.randn(100), 'o')  # 在ax(绘图区）中绘制
 ax.set_title('Simple Scatter')
-
+                         # 使用ax这种面向对象的方法，所有.plot函数和标题设置函数 变成了object的methods，而不再是plt下面的函数。官方推荐该方法。
 plt.show()
