@@ -86,4 +86,41 @@ gs = gridspec.GridSpec(3, 3) # 设定3x3网格
 ax1 = plt.subplot(gs[0, :]) # 选中网格，确定选中的行列网格数
 ax2 = plt.subplot(gs[1, :-1]
 
+# 常用绘图函数
+plt.boxplot(data, notch, position)  # 在图形中增加带箭头的注解
+plt.bar(left, height, width, bottom)  # 横向条形图
+plt.barh(width, bottom, left, height) #条形图
+plt.hist(x,bins,normed) # 直方图
+plt.scatter(x,y)        # 散点图
+plt.cohere(x,y,NFFT=256, Fs) # X-Y 的相关性函数
+plt.vlines()            # 垂线图
+plt.plot_date()         # 数据日期
+plt.polar(theta, r)
+plt.pie(data, explode)  # 饼图
 
+# 例1 饼图：
+labels = 'Frogs', 'Hogs', 'Dogs','Logs'
+sizes = [15, 30, 45, 10]  # 占比
+explode = (0, 0.1, 0, 0)
+plt.pie(sizes, explode=explode, labels=labels,
+        autopct='%1.1f%%',shadow=False, startangle=90)  # 饼图l
+plt.axis('equal')
+
+# 例2 直方图：
+np.random.seed(0)
+mu, sigma = 100, 20
+a = np.random.normal(mu, sigma, size=100)
+
+plt.hist(a, 
+	 20,   # 直方图的个数
+	 normed=1, histtype='stepfilled',
+	 facecolor='b', alpha=0.75)
+plt.tile('Histogram')
+plt.show()
+
+# 例3：散点图
+fig, ax = plt.subplots()
+ax.plot(10*np.random.randn(100), 10*np.random.randn(100), 'o')
+ax.set_title('Simple Scatter')
+
+plt.show()
