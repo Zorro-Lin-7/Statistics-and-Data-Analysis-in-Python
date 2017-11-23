@@ -20,6 +20,15 @@ sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3)
 # 修改参数dige_kind
 sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3, diag_kind="kde")
 
+# 例：分布-概率密度曲线
+plt.figure(figsize=(15,8)) # 设置大小
+plt.xticks(np.arange(550, 650, 10),fontsize=12) # （局部）刻度展示，比例尺，x字符大小
+plt.yticks(fontsize=13)
+plt.xlabel('score',fontsize=20) # 设置xlabel
+sns.kdeplot(X_test_point[X_test_point.y==1].score,label='y=1') #首先执行。发现缺少label,比例尺，字体大小，都不好看，于是使用上面语句调试
+sns.kdeplot(X_test_point[X_test_point.y==0].score,label='y=0')
+
+
 # ======= Matplotlib 基础 =========
 
 plt.plot(x,    
