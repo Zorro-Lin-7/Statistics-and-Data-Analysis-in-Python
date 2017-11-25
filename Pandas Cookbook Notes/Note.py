@@ -234,7 +234,7 @@ df['A'].cumsum()
  
  >>> %timeit df.loc['China, Beijing']    # 速度快1个量级
  
- ## 按百分位选择
+ ## √ 按百分位选择
  A = df['A'] # pd.Series
  df_summary = A.describe(percentiles=[.1, .9])
  upper_10 = A.loc['90%']  # 取得90%位的值
@@ -260,7 +260,7 @@ df['A'].cumsum()
       select_columns = ['city', 'gender', 'age']
       df.loc[criteria_final, select_columns]  # .loc[ , ]
    
-   ## .query 当过滤条件很繁复时，Boolean Indexing 语法会很啰嗦。.query 方法可以精简代码及增强可读性，语法更像直白的英文表达。√
+   ## √ .query 当过滤条件很繁复时，Boolean Indexing 语法会很啰嗦。.query 方法可以精简代码及增强可读性，语法更像直白的英文表达。√
        # 注意：该方法仍在试验，也并不及布尔索引强大，不可用作production codes
       # 例： 
       employee = pd.read_csv('../data/employee.csv')
@@ -273,7 +273,7 @@ df['A'].cumsum()
       emp_filtered = employee.query(query_string)
       emp_filtered[select_columns].head()
        
-  ## 变化率 pd.Sereise.pct_change()
+  ## √ 变化率 pd.Sereise.pct_change()
      # 例：Amazon股价变化的分布
       amzn = pd.read_csv('../data/amzn_stock.csv', index_col='Date', parse_dates=['Date'])
       amzn_daily_return = amzn.Close.pct_change()
@@ -284,13 +284,31 @@ df['A'].cumsum()
       st = amzn_daily_return.std()
       abs_z_score = amzn_daily_return.sub(mea).abs().div(st)
        # 分布返回1，2，3个标准差内的百分比（占比）√
-      pcts = [abs_z_score.lt(i).mean() for i in range(1,4)] # .mean() 常用于计算百分比
+      pcts = [abs_z_score.lt(i).mean() for i in range(1,4)] # .mean() 常用于比较运算后，计算(布尔值）的百分比，因为True=1,False=0
       print('{:.3f} fall within 1 standard deviation. '
             '{:.3f} fall within 2 standard deviation. '
             '{:.3f} fall within 3 standard deviation. '.foramt(*pcts)) # √ 格式化print ，扩展参数*
-
+   ## √ .where 筛选符合条件的，同时保留不符合条件的值; 类比np.where。可用于异常值处理，去头掐尾找出大部分的非异常值，保留并replace异常值（而非删除）
+       #例：
+       movie = pd.read_csv('../data/movie.csv', index_col='movie_title')
+       facebook_likes = movie['actor_1_facebook_likes'].dropna()
+       facebook_likes.hist()                                             # 可看出分布很不均匀，基本全部数据分到一个bin里。
+       criteria_high = facebook_likes < 20000                            # 筛选出 <20000 的
+       criteria_high.mean()                                              # 占比90.8%（ True=1,False=0）
+       facebook_likes.where(criteria_high).head()                        # √ where ，过滤出<20000的项；>=的，保留为Nan
        
- 
+       criteria_low = facebook_likes > 300
+       facebook_likes_cap = facebook_likes.where(criteria_high, other=20000)\  # < 20000
+                                   .where(criteria_low, 300)                   # and > 300 
+       facebook_likes_cap.hist()                                         # 分布相对均匀了
+       
+    ## √ .clip 可用等价实现上面.where的效果，"裁剪、剪报、去头掐尾函数"
+       facebook_likes_cap2 = facebook_likes.clip(lower=300, upper=20000)
+       facebook_likes_cap2.equals(facebook_likes_cap)
+       
+    ## √ .mask 功能与where相反，顾名思义，用NaN 遮盖住不满足条件的数据，并不删除，前后的shape不变。
+     
+       
 ##################### My practices
  
  # 思想：Pandas 与Numpy的重要区别是，Pandas有索引，通过索引可以操作DataFrame的值。Numpy中不存在索引，所以所有操作必须通过维度来控制，相对复杂。
