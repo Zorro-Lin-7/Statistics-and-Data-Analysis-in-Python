@@ -1,3 +1,6 @@
+'''
+快速检索：√ 表示偶得的tricks
+'''
 ########### Note 1
 
 # Jupyter 索引操作：
@@ -240,7 +243,7 @@ df['A'].cumsum()
  A_top_bottom_10 = A[criteria]
  
  A.plot(color='b', figsize=(12, 6)) # 折线图
- A_top_bottome_10.plot(marker='o', style=' ', ms=4, color='r') # 点图（不连线的折线图）；ms:marker_size; 在折线图的基础上，全出各折点
+ A_top_bottome_10.plot(marker='o', style=' ', ms=4, color='r') # √ 点图（不连线的折线图）；ms:marker_size; 在折线图的基础上，全出各折点
  
  xmin = criteria.index[0]
  xmax = criteria.index[-1]
@@ -256,7 +259,37 @@ df['A'].cumsum()
       criteria_final = criteria_city & criteria_gender & criteria_age
       select_columns = ['city', 'gender', 'age']
       df.loc[criteria_final, select_columns]  # .loc[ , ]
-     
+   
+   ## .query 当过滤条件很繁复时，Boolean Indexing 语法会很啰嗦。.query 方法可以精简代码及增强可读性，语法更像直白的英文表达。√
+       # 注意：该方法仍在试验，也并不及布尔索引强大，不可用作production codes
+      # 例： 
+      employee = pd.read_csv('../data/employee.csv')
+      depts = ['Houston Police Department-HPD', 'Houston Fire Department (HFD)']
+      select_columns = ['UNIQUE_ID', 'DEPARTMENT', 'GENDER', 'BASE_SALARY']
+      query_string = "DEPARTMENT not in @depts " \  # not in 和 @ 的使用  √
+               "and GENDER == 'Female' " \      # 字符串值 用引号
+               "and 80000 <= BASE_SALARY <= 120000"
+        
+      emp_filtered = employee.query(query_string)
+      emp_filtered[select_columns].head()
+       
+  ## 变化率 pd.Sereise.pct_change()
+     # 例：Amazon股价变化的分布
+      amzn = pd.read_csv('../data/amzn_stock.csv', index_col='Date', parse_dates=['Date'])
+      amzn_daily_return = amzn.Close.pct_change()
+      aman_daily_return = amzn_daily_return.dropna()
+      aman_daily_return.hist(bins=20)  # 画直方图
+       # 每个observation的z-score，即距离均值 几个标准差：
+      mea = amzn_daily_return.mean()
+      st = amzn_daily_return.std()
+      abs_z_score = amzn_daily_return.sub(mea).abs().div(st)
+       # 分布返回1，2，3个标准差内的百分比（占比）√
+      pcts = [abs_z_score.lt(i).mean() for i in range(1,4)] # .mean() 常用于计算百分比
+      print('{:.3f} fall within 1 standard deviation. '
+            '{:.3f} fall within 2 standard deviation. '
+            '{:.3f} fall within 3 standard deviation. '.foramt(*pcts)) # √ 格式化print ，扩展参数*
+
+       
  
 ##################### My practices
  
