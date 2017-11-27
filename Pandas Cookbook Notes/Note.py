@@ -307,7 +307,30 @@ df['A'].cumsum()
        facebook_likes_cap2.equals(facebook_likes_cap)
        
     ## √ .mask 功能与where相反，顾名思义，用NaN 遮盖住不满足条件的数据，并不删除，前后的shape不变。
-     
+  
+######### Note 6 面向index的操作
+       # Indexes 支持集合操作，类似Python sets
+       >>> df.columns   # 若加.values 返回ndarray，无以下集合操作
+       Index(['a', 'b', 'c', 'd'], dtype='object')
+       >>> columns = df.columns
+       
+       >>> c1 = columns[:3]
+       >>> c1
+       Index(['a', 'b', 'c'], dtype='object')
+       
+       >>> c2 = columns[2:]
+       >>> c2
+       Index(['c', 'd'], dtype='object')
+       
+       >>> c1.union(c2)                           # 并集
+       Index(['a', 'b', 'c', 'd'], dtype='object')
+       >>> c1 | c2
+       Index(['a', 'b', 'c', 'd'], dtype='object')
+       
+       >>> c1.symmetric_difference(c2)             # 对称差分
+       Index(['a', 'b', 'd'], dtype='object')
+       >>> c1 ^ c2
+       Index(['a', 'b', 'd'], dtype='object')
        
 ##################### My practices
  
