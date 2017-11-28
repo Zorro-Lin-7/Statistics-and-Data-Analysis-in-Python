@@ -27,6 +27,7 @@ plt.yticks(fontsize=13)
 plt.xlabel('score',fontsize=20) # 设置xlabel
 sns.kdeplot(X_test_point[X_test_point.y==1].score,label='y=1') #首先执行。发现缺少label,比例尺，字体大小，都不好看，于是使用上面语句调试
 sns.kdeplot(X_test_point[X_test_point.y==0].score,label='y=0')
+plt.legend(fontsize=13, loc=0)  # 更多参数可help查询
 
 
 # ======= Matplotlib 基础 =========
