@@ -331,6 +331,14 @@ df['A'].cumsum()
        Index(['a', 'b', 'd'], dtype='object')
        >>> c1 ^ c2
        Index(['a', 'b', 'd'], dtype='object')
+       >>> c1.difference(c2)             # 差集， in c1 and not in c2 
+       
+       # 检查某列是否含缺失值
+       >>> df['A'].hasnans  
+       False
+       
+       # 高亮显示缺失值部分
+       df.style.highlight_null('yellow')
        
 ##################### My practices
  
