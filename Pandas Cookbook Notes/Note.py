@@ -366,5 +366,8 @@ s.is_monotonic_decreasing or s.is_monotonic_increasing
  # 相关性分析，适用于Series, DataFrame
        .cor()  # 计算协方差矩阵
        .corr() # 计算相关系数矩阵，参数有Pearson、Spearman、Kendall等
-       
+   corr=df.corr()  # 计算变量（列）两两之间的（皮尔逊相关系数）
+   threshold=corr[corr > 0.7].sum() -1  # 过滤相关系数 > 0.7的
+   corv=threshold[threshold > 0.7]
+   train[corv.index].corr()
  
