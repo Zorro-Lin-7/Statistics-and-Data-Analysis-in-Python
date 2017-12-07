@@ -128,7 +128,7 @@ df.describe(include=[np.object, pd.Categorical]).T  # 转置操作可以增强�
 
 ### Data Dictionaries很重要，合作必需。
 
-## 改变数据类型，节省内存
+## 改变数据类型，节省内存; 当列中含有一个string，pandas会强制该列为Object类行，其数值也会变成string
 df[['col1','col2']].memory_usage(deep=True)        # 每列占用的内存;必须设置deep=True才能准确提取每个值的内存，尤其Object类型；
 df['clo2'] = df['col2'].astype(np.int8)                 # 只有0/1 2个值的，可以转化为8-bit integer
 
@@ -202,6 +202,9 @@ df['A'].cumsum()
  
  cols = ['A','B','C']
  df.loc[criteria3, cols]
+       
+ criteria = df.nunique() == 2
+ binary_cols = df.columns[criteria].tolist()
  
  ## Python中，非0整数、非空字符串、非空序列都可为布尔值True
  
@@ -338,11 +341,19 @@ df['A'].cumsum()
        False
        
        # 高亮显示缺失值部分
-       df.style.highlight_null('yellow')
+       df.style.highlight_null('yellow')# .style 只可用于小DataFrame，否认Jupyter 会崩溃。
+       # 高亮显示最大值
+       df.style.highlight_max(axis=) 
        
        # 将某列设为index，比如去重后索引乱序--.set_index()
        df = df.drop_duplicates(subset='column1')
        df = df.set_index('column1')
+       
+       # 将整列转换为数值类型  
+       for col in cols:  # pd.to_numeric 只接受 list, tuple, 1-d array, or Series，不接受DataFrame。所以用for遍历，或用apply
+           df[col]= pd.to_numeric(df[col],errors='coerce') # 参数使得非数值字符串转换为 Nan
+           
+       
        
        
 ##################### My practices
@@ -357,9 +368,15 @@ t = [1,2,3,4,5]
 t.index(max(t))
 
 s = pd.Series(t)
-s.idxmax()
+s.idxmax()  # √
 s.idxmin()
 
+# 例：查找每row中的最大值
+  df.indmax(axis=1) # 进一步可用 .value_counts(normalize=True)
+  
+
+       
+       
 df['col'].argmax()
 
 # 一列Series 或 index是否有单调性，即排过序，包括字母：
