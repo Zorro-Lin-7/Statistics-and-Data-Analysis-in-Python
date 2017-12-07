@@ -340,6 +340,11 @@ df['A'].cumsum()
        # 高亮显示缺失值部分
        df.style.highlight_null('yellow')
        
+       # 将某列设为index，比如去重后索引乱序--.set_index()
+       df = df.drop_duplicates(subset='column1')
+       df = df.set_index('column1')
+       
+       
 ##################### My practices
  
  # 思想：Pandas 与Numpy的重要区别是，Pandas有索引，通过索引可以操作DataFrame的值。Numpy中不存在索引，所以所有操作必须通过维度来控制，相对复杂。
