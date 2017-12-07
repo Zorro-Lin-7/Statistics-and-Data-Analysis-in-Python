@@ -360,6 +360,10 @@ df['A'].cumsum()
  
  # 思想：Pandas 与Numpy的重要区别是，Pandas有索引，通过索引可以操作DataFrame的值。Numpy中不存在索引，所以所有操作必须通过维度来控制，相对复杂。
  #      Pandas通过索引，将对一组数据的使用，简化为对索引的使用。比如差集、交集、并集。算术运算根据行、列索引（补齐后）运算
+       
+# 直接读取zip、gz等压缩文件，而非先解压
+df = pd.read_csv('filename.tar.gz', compression='gzip')
+       
 # 新增一行：
 df.loc['行名']= 
 
