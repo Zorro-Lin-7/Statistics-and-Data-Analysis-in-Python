@@ -23,3 +23,24 @@ for file in files: #遍历文件夹
               str = str + line  
           s.append(str) #每个文件的文本存到list中  
 print(s) #打印结果  
+
+# 字符串操作
+str.join(sequence)
+str.count(sub, start= 0,end=len(string))
+str.isalpha()
+str.replace()
+str.split() # 返回列表
+
+>>>str = "-"
+>>>seq = ("a", "b", "c")
+>>>print(str.join( seq ))
+a-b-c
+>>>' '.join('abc') # 需要加括号
+a b c
+
+# 列表操作
+l.remove(x) # 删除列表中第一次出现的元素x
+l.index(x)  # 返回第一次出现元素x的索引值
+l.count(x)  # 列表中x的个数
+l.reverse() # 倒序
+
