@@ -1,6 +1,11 @@
 print(value,...,sep=' ', end='\n')
 
-input() # 产出的是string, 若输入数字，需要 int(input())
+input() # 产出的是string, 若输入数字，需要 int(input()); 
+
+# 连续input 2个以上的值可以用:
+import ast
+ast.literal_eval(input('输入2个数'))
+
 
 # Python读取文件夹下的所有文件
 # os.listdir(path)是得到在path路径下所以文件的名称列表。
