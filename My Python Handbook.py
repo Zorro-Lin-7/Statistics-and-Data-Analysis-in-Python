@@ -44,3 +44,14 @@ l.index(x)  # 返回第一次出现元素x的索引值
 l.count(x)  # 列表中x的个数
 l.reverse() # 倒序
 
+# pyton 的math, random 库可用numpy代替
+# math:
+np.pi 
+np.e
+np.log()
+np.cos()
+
+# random: http://blog.csdn.net/unin88/article/details/50570196
+
+# 字符串格式化方法 http://www.icourse163.org/learn/BIT-268001#/learn/content?type=detail&id=1003121179&sm=1
+'{0:*>20.2f}'.format(3.14159)
