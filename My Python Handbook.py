@@ -17,13 +17,74 @@
     高级软件测试方法
 
 # √ 敏捷开发： 关键词“任务看板”。http://www.icourse163.org/learn/BIT-268001#/learn/content?type=detail&id=1003121208&cid=1003698576
+
 # √ 面向过程的程序设计：以程序执行过程为设计流程的思想，最自然而然。OOP的过程中也会用到该方法。步骤
     0.分解问题，将一个全局过程分解为一系列局部问题
     1.分析程序从输入到输出的各步骤
     2.按照执行过程从前到后编写程序
     3.将高耦合部分封装成模块或函数
     4.输入参数，按照程序执行过程调试
-
+    
+# √ 面向对象的程序设计：
+真实世界中的object，有【状态】和【行为】，也就是attributes／features 和 methods. 比如：
+    * 猫
+        状态：名字、颜色
+        行为：喵叫、摇尾巴、睡觉
+    * 台灯
+        状态：开、关
+        行为：打开、关闭
+  类：某种类型【集合】的描述。例：人
+    属性：【类】本身的一些特性，比如身高、体重、名字；具体值根据每个人不同而不同
+    方法：【类】所能实现的行为，如吃饭、走路、睡觉
+    
+面向对象的特点：
+  封装：
+    从业务逻辑中抽象对象时，赋予对象相关数据与操作，把一些数据和操作打包在一起的过程就是【封装】；
+    对象的实现和使用是独立的；
+    支持代码复用。
+    
+# 类的定义    例：找出GPA最高的学生.py：
+class Student:    # Student 学生的属性和方法封装在类的内部；
+    def __init___(self, name, hours, qpoints):
+        self.name = name
+        self.hours = float(hours)
+        self.qpoints = float(qpoints)
+    
+    def getName(self):
+        return self.name
+      
+    def getHours(self):
+        return self.hours
+      
+    def getQPoints(self):
+        return self.qpoints
+      
+    def gpa(self):
+        return self.qpoints/self.hours
+def makeStudent(infoStr):
+    name, hours, qpoints = infoStr.split("\t")
+    return Student(name, hours, qpoints)     # √ 像调用函数一样调用类；Student类可以被多个程序、多个对象所使用
+  
+def main():
+    filename = input('Enter name the grade file: ') # 打开输入文件
+    infile = open(filename, 'r')
+    best = makeStuent(infile.readline())  # 设置文件中第一个学生的记录为best
+    
+    for line in infile:    # 处理文件剩余行数据
+        s = makeStudent(line) # 将每行数据转换为一个记录
+        if s.gpa() > best.gpa(): # 如果该学士是目前GPA最高的，记录下来
+            best = s
+    infile.close()
+    
+    print(best.getName())  # 打印GPA成绩最高的学生信息
+    print(best.getHours())
+    print(best.gpa())
+    
+if __name__ == '__main__':
+    main()
+-------------------------------------    
+    
+    
 print(value,...,sep=' ', end='\n')
 
 input() # 产出的是string, 若输入数字，需要 int(input()); 
