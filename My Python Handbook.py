@@ -1,3 +1,6 @@
+# 检索tip: √ 标注 表示重点
+
+
 print(value,...,sep=' ', end='\n')
 
 input() # 产出的是string, 若输入数字，需要 int(input()); 
@@ -60,3 +63,17 @@ np.cos()
 
 # 字符串格式化方法 http://www.icourse163.org/learn/BIT-268001#/learn/content?type=detail&id=1003121179&sm=1
 '{0:*>20.2f}'.format(3.14159)
+
+# 布尔值：空串、零值、零序列都为False，其他为True
+
+# 函数定义
+# 可以没有return语句。被调用时，执行函数body，比如print语句。 √
+# 无return语句 等价于 return None √
+# 函数接口：input——参数、output--return
+
+# 函数调用过程的树状解析：
+def main():
+    sing('Mike')    -----> def sing(person):
+    print()                    print('Happy birthday, dear', person+'.')  # +连接字符串没有空格
+                               happy()            -----> def happy():
+                                                             print("Happy birthday to you!')
