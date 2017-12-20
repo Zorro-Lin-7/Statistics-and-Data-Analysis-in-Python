@@ -161,3 +161,38 @@ def main():
     print()                    print('Happy birthday, dear', person+'.')  # +连接字符串没有空格
                                happy()            -----> def happy():
                                                              print("Happy birthday to you!')
+                                                                   
+# 文件的基础
+ 文件：有序的数据序列
+ 编码：信息从一种形式转换为另一种形式。计算机存储、处理需要一种形式，比如出于节省空间的需求；人阅读、处理是另一种形式，出于汉字、西文的不同需求。
+ 二进制文件ASCII码：
+    照片、音乐、视频、计算机程序等；
+    优点：节省空间、表示更精确、采用二进制无格式存储
+# 文件的处理： http://www.icourse163.org/learn/BIT-268001#/learn/content?type=detail&id=1003121198&cid=1003698546
+1、打开：使硬盘上的文件与程序建立联系 
+2、操作：读取、写入、定位、其他
+3、关闭：切断程序与文件的联系；写入磁盘，并释放文件缓冲区
+
+例：文件拷贝.py                                                                 
+def main():
+    f1 = input('Enter a filename').strip() # 用户输入文件名
+    f2 = input('Enter a filename').strip()
+    
+    infile = open(f1, 'r')  # 打开文件
+    outfile = open(f2, 'r') 
+    
+    # 拷贝数据
+    countLines = countChars = 0
+    for line in infile:  # 当文件很大时，若用infile.readlines() 读入为一个列表会占用很大内存；
+        # 逐行处理文件内容
+        countLines += 1  # 统计文件有多少行
+        countChars += len(line) # 统计文件有多少字符数
+        outfile.write(line)
+    print(countLines,  'lines end', countChars, 'chars copied') # x行 y个字符
+    
+    infile.close()
+    outfile.close()
+    
+main()
+    
+
