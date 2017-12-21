@@ -85,7 +85,13 @@ if __name__ == '__main__':
 -------------------------------------    
     
     
-print(value,...,sep=' ', end='\n')
+print(value,...,sep=' ', end='\n') # print() 打印空行，即换行
+
+# 字典的方法
+>>>student = {'小明':'男', '小红':'女'}
+>>>tuple(student.keys())    # 结合tuple使用
+>>>student.get('小明')      # get
+'男'
 
 input() # 产出的是string, 若输入数字，需要 int(input()); 
 
