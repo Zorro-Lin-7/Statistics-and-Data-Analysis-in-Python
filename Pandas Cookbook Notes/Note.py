@@ -397,3 +397,5 @@ s.is_monotonic_decreasing or s.is_monotonic_increasing
    corv=threshold[threshold > 0.7]
    train[corv.index].corr()
  
+# 文本处理
+       .str.
