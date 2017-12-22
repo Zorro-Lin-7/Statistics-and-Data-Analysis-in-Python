@@ -399,3 +399,13 @@ s.is_monotonic_decreasing or s.is_monotonic_increasing
  
 # 文本处理
        .str.
+  # 正则 √
+       .apply(lambda x: len(re.findall('@.*雪', x))
+    def find(x):
+        pattern = re.compile(r'())
+        results = pattern.search(x)
+        if '雪碧' in results.groupdict()['name']
+            return 1
+        else:
+            return 0
+    df[x].apply(find)
