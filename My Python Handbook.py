@@ -171,6 +171,11 @@ np.cos()
 # 可以没有return语句。被调用时，执行函数body，比如print语句。 √
 # 无return语句 等价于 return None √
 # 函数接口：input——参数、output--return
+# 若有多个return，第一个return执行即结束： 
+def first_return():
+    if 2 > 1:
+       return 2    
+    return None
 
 # 函数调用过程的树状解析：
 def main():
