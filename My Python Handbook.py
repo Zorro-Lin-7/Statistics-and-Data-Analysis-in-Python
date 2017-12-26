@@ -212,7 +212,8 @@ def main():
     
 main()
     
-# dir 获得一个对象的所有属性和方法      
-dir(list)
+# dir 获得一个对象的所有属性和方法   
+a = 'ABC'                                                               
+dir(a)
 
 
