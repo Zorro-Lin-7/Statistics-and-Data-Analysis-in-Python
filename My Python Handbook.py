@@ -44,9 +44,9 @@
     支持代码复用。
     
 # 类的定义    例：找出GPA最高的学生.py：
-class Student:    # Student 学生的属性和方法封装在类的内部；
+class Student(object):    # Student 学生的属性和方法封装在类的内部；
     def __init___(self, name, hours, qpoints):
-        self.name = name
+        self.__name = name       # 前面加双下划线表示私有变量，不能外部访问、修改
         self.hours = float(hours)
         self.qpoints = float(qpoints)
     
@@ -61,6 +61,14 @@ class Student:    # Student 学生的属性和方法封装在类的内部；
       
     def gpa(self):
         return self.qpoints/self.hours
+      
+# >>> student1 = Student('小明', 10, 3)
+# >>> student1.hours
+# 10
+# >>> student1.qpoint
+# 3
+# >>> student1.getName()
+
 def makeStudent(infoStr):
     name, hours, qpoints = infoStr.split("\t")
     return Student(name, hours, qpoints)     # √ 像调用函数一样调用类；Student类可以被多个程序、多个对象所使用
@@ -82,6 +90,9 @@ def main():
     
 if __name__ == '__main__':
     main()
+    
+
+    
 -------------------------------------    
     
     
@@ -201,4 +212,7 @@ def main():
     
 main()
     
+# dir 获得一个对象的所有属性和方法      
+dir(list)
+
 
