@@ -354,6 +354,7 @@ df['A'].cumsum()
            df[col]= pd.to_numeric(df[col],errors='coerce') # 参数使得非数值字符串转换为 Nan
 
 ######### Note 7 Grouping 
+# 任何grouping 操作都有3部分组成：the grouping columns, aggregating columns, aggregating functions
 #聚合，顾名思义，将多个值聚合为一个值
         
 ######### Note 7 Grouping 
@@ -363,9 +364,29 @@ df.groupby('A').agg({'B':'mean'}) #√ 用传入字典，得到的是DataFrame�
 df.groupby('A').agg({'B':'mean', 'C':'var', 'D':'idxmax'}) # √ 用agg能对多列采用多种不同的聚合方法（aggregation，或可用自定义函数）
        
 # 可传入mean, min, max, median, sum, count, std, var, describe, size, nunique, idxmin, idxmax，包括一些np方法，如np.mean
+# size 返回的是总行数数， count 则对非缺失值 计数
 
 groupbyob = df.groupby('A')
 dir(groupbyob) # 可用dir 探索DataFrameGroupby 对象
+groupbyob.mean() # √ 若不加aggregating columns ，直接跟 aggregating method，则对'A'以外的所有列进行聚合。
+       
+# 多列，多聚合函数同时操作
+#例1:
+>>> df.groupby(['A','B'])['C','D'].agg(['sum', 'mean']) # C,D 列 都做sum, mean 操作
+     C            D
+    sum mean    sum mean
+A B      
+a 1  20   55
+  2  2    23
+  3  44   64
+ 
+# 例2:
+>>>group_cols = ['A','B']   # 可以将操作的三个部分生成3个变量，增加可读性
+>>>agg_dict = {'C': ['sum', 'mean', 'size'], # map specific agg_cols to specific agg_funs
+               'D': ['mean', 'var']}         
+>>>df.groupby(group_cols) \
+     .agg(agg_dict)
+       
        
        
 ##################### My practices
