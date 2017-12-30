@@ -4,7 +4,7 @@
 ########### Note 1
 
 # Jupyter 索引操作：
-[](#)
+[目录下的标题名](#实际正文中的标题名)
 
 pd.set_option('max_columns',8,'max_rows',10)
 movie.get_dtype_counts()
