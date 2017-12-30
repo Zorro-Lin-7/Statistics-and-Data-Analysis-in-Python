@@ -386,8 +386,32 @@ a 1  20   55
                'D': ['mean', 'var']}         
 >>>df.groupby(group_cols) \
      .agg(agg_dict)
+    
+# grouping 之后，删除（合并）多级（列）索引
+# 例3:
+>>>airline_info = flights.groupby(['AIRLINE', 'WEEKDAY'])\
+                         .agg({'DIST':['sum', 'mean'], 
+                               'ARR_DELAY':['min', 'max']}) \
+                         .astype(int)     # √ 转换为整数
+>>>level0 = airline_info.columns.get_level_values(0)   # √ 提取各级列索引
+>>>level0
+Index(['DIST', 'DIST', 'ARR_DELAY', 'ARR_DELAY'], dtype='object')
+>>>level1 = airline_info.columns.get_level_values(1)
+>>>level1
+Index(['sum', 'mean', 'min', 'max'], dtype='object')
        
+>>>airline_info.columns = level0 + '_' + level1  # √ 多级列索引合并
        
+                DIST_sum	|DIST_mean	|ARR_DELAY_min	|ARR_DELAY_max
+AIRLINE|	WEEKDAY				
+AA	       1	      1455386	   1139	       -60	         551
+          2	      1358256   	1107	       -52	         725
+     
+>>>airline_info.reset_index()    # √ 将多级索引压缩为 just a single level。通常保留会更直观。
+
+# 例4: 
+flights.groupby(['AIRLINE'], as_index=False)['DIST'].agg('mean').round(0) # √ group_cols 不作index；结果保留有效位数
+      
        
 ##################### My practices
  
