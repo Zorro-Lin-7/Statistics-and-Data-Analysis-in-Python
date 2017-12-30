@@ -352,8 +352,20 @@ df['A'].cumsum()
        # 将整列转换为数值类型  
        for col in cols:  # pd.to_numeric 只接受 list, tuple, 1-d array, or Series，不接受DataFrame。所以用for遍历，或用apply
            df[col]= pd.to_numeric(df[col],errors='coerce') # 参数使得非数值字符串转换为 Nan
-           
+
+######### Note 7 Grouping 
+#聚合，顾名思义，将多个值聚合为一个值
+        
+######### Note 7 Grouping 
+df.groupby('A').B.mean()
+df.groupby('A').B.agg('mean')
+df.groupby('A').agg({'B':'mean'}) #√ 用传入字典，得到的是DataFrame，而非Series
+df.groupby('A').agg({'B':'mean', 'C':'var', 'D':'idxmax'}) # √ 用agg能对多列采用多种不同的聚合方法（aggregation，或可用自定义函数）
        
+# 可传入mean, min, max, median, sum, count, std, var, describe, size, nunique, idxmin, idxmax，包括一些np方法，如np.mean
+
+groupbyob = df.groupby('A')
+dir(groupbyob) # 可用dir 探索DataFrameGroupby 对象
        
        
 ##################### My practices
