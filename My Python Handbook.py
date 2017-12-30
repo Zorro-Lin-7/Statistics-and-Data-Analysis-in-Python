@@ -217,8 +217,8 @@ def main():
     
 main()
     
-# dir 获得一个对象的所有属性和方法   
+# dir 获得一个对象的所有属性和方法  √ 重点。比如 DataFrame groupby 之后的对象类型是 DataFrameGroupby，该对象的方法有 .agg, max 等等 
 a = 'ABC'                                                               
-dir(a)
+dir(a) 
 
 
