@@ -369,6 +369,10 @@ df.groupby('A').agg({'B':'mean', 'C':'var', 'D':'idxmax'}) # √ 用agg能对多
 groupbyob = df.groupby('A')
 dir(groupbyob) # 可用dir 探索DataFrameGroupby 对象
 groupbyob.mean() # √ 若不加aggregating columns ，直接跟 aggregating method，则对'A'以外的所有列进行聚合。
+
+# √ groupby之后，查看其中的某单个分组
+groupbyob.head().head()     # 取每组的前5行组成一个DataFrame
+groupbyob.nth([1,-1]).head() # 选取每组的第1行和最后1行（注意中间是逗号，选取的是指定行）
        
 # 多列，多聚合函数同时操作
 #例1:
@@ -412,6 +416,8 @@ AA	       1	      1455386	   1139	       -60	         551
 # 例4: 
 flights.groupby(['AIRLINE'], as_index=False)['DIST'].agg('mean').round(0) # √ group_cols 不作index；结果保留有效位数
       
+
+       
        
 ##################### My practices
  
