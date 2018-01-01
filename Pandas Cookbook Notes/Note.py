@@ -1,5 +1,5 @@
 '''
-快速检索：√ 表示偶得的tricks
+快速检索：√ 表示未知的操作tricks；或低频的
 '''
 ########### Note 1
 
@@ -416,7 +416,14 @@ AA	       1	      1455386	   1139	       -60	         551
 # 例4: 
 flights.groupby(['AIRLINE'], as_index=False)['DIST'].agg('mean').round(0) # √ group_cols 不作index；结果保留有效位数
       
+# grouping 之后进行filter √ 低频
+  # 类似标记每一行True or False 来进行筛选，我们也可以标记grouping之后的每个gruop，过滤掉为False的groups
+grouped = college.groupby('STABBR')  # 首先 .groupby 再使用 .filter
+grouped.ngroups  # 查看有多少个不同的group，类似df.nunique()
+       
+.filter 接收 自定义函数，传入的是 DataFrame，该函数必须返回 True or False。
 
+注意：.groupby 之后调用.filter 完全不同于DataFrame.fitler
        
        
 ##################### My practices
