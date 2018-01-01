@@ -441,7 +441,12 @@ apply 最灵活，可替代agg 和transform;接受的函数可返回 a scaler, a
        
 # √ 但是，上面的操作代价很高，这里仅有6w行，若数量更多，方法 .apply(,axis=1) 是Pandas中性能最差的操作之一。
 Pandas 内部循环遍历每一行，没有采用任何numpy的加速措施。尽可能 avoid using apply with axis=1
-       
+   
+#其它：
+s = pd.Series([1, 1, 1, 0, 1, 1, 1, 0])
+s.cumsum()
+s.diff() # 当前值减去前一个值
+s.where(lambda x: x<0)  # 不满足的 用nan填充
        
 ##################### My practices
  
