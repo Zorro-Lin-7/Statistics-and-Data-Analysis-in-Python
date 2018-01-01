@@ -425,6 +425,17 @@ grouped.ngroups  # 查看有多少个不同的group，类似df.nunique()
 
 注意：.groupby 之后调用.filter 完全不同于DataFrame.fitler
        
+#√ groupby 有4个method 接受functions 来对其每段group进行运算操作。分别是agg, filter, transform, apply。
+前3个都要求 functions返回特定的output:
+       1. agg 必须返回一个scalar value
+       2. filter 必须返回True or False
+       3. transform 必须返回一列 Series
+apply 最灵活，可替代agg 和transform;接受的函数可返回 a scaler, a Series, a DataFrame of any shape. #√ 低频
+自定义函数均可搭配scipy、numpy 做科学计算，如几何平均数、调和平均数
+       
+# √ 低频。 grouping 之后 的.transform ，同一列，基于每组的所有数进行操作，接受自定义函数。比如算各组4个数，算基于各组（而不是整列）均值的z_score。
+# 类似Series.map，只不过直接跟在grouopby 之后，更方便 
+       
        
 ##################### My practices
  
@@ -479,3 +490,9 @@ s.is_monotonic_decreasing or s.is_monotonic_increasing
         else:
             return 0
     df[x].apply(find)
+                             
+# 日期生成
+index = pd.date_range('10/1/1999',periods=1100) # periods 是天数
+                             
+# np.where
+df['C'] = np.where(df['A'] > df['B'], 'a','b')
