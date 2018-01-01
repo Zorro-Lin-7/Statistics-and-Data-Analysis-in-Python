@@ -439,6 +439,9 @@ apply 最灵活，可替代agg 和transform;接受的函数可返回 a scaler, a
 # √ 低频。 grouping 之后 的.transform ，同一列，基于每组的所有数进行操作，接受自定义函数。比如算各组4个数，算基于各组（而不是整列）均值的z_score。
 # 类似Series.map，只不过直接跟在grouopby 之后，更方便 
        
+# √ 但是，上面的操作代价很高，这里仅有6w行，若数量更多，方法 .apply(,axis=1) 是Pandas中性能最差的操作之一。
+Pandas 内部循环遍历每一行，没有采用任何numpy的加速措施。尽可能 avoid using apply with axis=1
+       
        
 ##################### My practices
  
