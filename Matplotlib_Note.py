@@ -135,3 +135,6 @@ ax.plot(10*np.random.randn(100), 10*np.random.randn(100), 'o')  # 在ax(绘图�
 ax.set_title('Simple Scatter')
                          # 使用ax这种面向对象的方法，所有.plot函数和标题设置函数 变成了object的methods，而不再是plt下面的函数。官方推荐该方法。
 plt.show()
+		  
+# √ 横轴是日期
+plt.plot_date(date,data)
