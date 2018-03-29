@@ -1,4 +1,4 @@
-# 搜索关键字：应该写成
+# 搜索关键字：应该写成；√；例；
 
 
 第二章的学习目标是: to learn What code is beautiful and Why certain decisions have been made in Python style guide.
@@ -264,7 +264,7 @@ from . import spam
 举例说明：遍历一个1000个元素的列表（以确认一个元素是否存在于该列表）要花O(n)，即1000步。做100次，将花100*O(n)=100*1000步。
 但若用Dict，确认某个元素是否存在只需O(1)，100*O(1)=100*1=100步。所以，使用字典比列表大约快1000倍。
 
-{----更具体的，“步”即for 循环：
+{----更具体的，“步”即for 循环：√
 # O(1):
 def o_one(items):
     return 1    # one operation so O(1)
@@ -292,16 +292,82 @@ o_n_squared(items)  # n*n = 10*10 = 100 operations
 ----}
 
 
+{----List，大部分方法的时间复杂度很低，比如append，get，set，len，为O(1)；但可能不曾留意remove 和insert 是O(n)，
+所以，要从1000个元素中删除1个，Python将遍历1000个项。其内部原理如下：
+
+# remove
+def remove(items, value):
+    new_items = []  
+    found = False # if not found = True，为了更像英文一样可读，所以设为False
+    for item in items:
+        if not found and item == value: # 跳过第一个找到的value
+            found = True    # 只删除第一个找到的value，之后循环再找到时，if not found = Fasle 了
+            continue # √ 跳过当前循环块中的剩余语句，进入下一轮
+        new_time.append(item)  # 其他元素复制到新的列表
+    
+    if not found:  # if not found = True = if not False ， 为了更像英文一样可读，所以设为False
+        raise ValueError('list.remove(x): x not in list') # √ 挂起Error
+        
+    return new_items	
+        
+# insert
+def insert(items, index, value)	:
+    new_item = [] 
+    for i, item in enumerate(items):
+        if i == index:
+            new_items.append(value)
+        new_items.append(item)
+    return new_items
+    
+----这2个方法都需要copy the entire list，当list很大时，就会变得笨重。
+
+----当要删除很多项时，filter 和 列表解析式会快很多，通过合理构造，只需copy一次：
+举例来说：
+删除从items里删除primes：
+
+primes = set((1, 2, 3, 5, 7)) # size: m = len(primes) = 5
+items = list(range(10))    # size: n = len(items) = 10
+
+# Classic solution
+for prime in primes:
+    items.remove(prime) # remove 里copy一次（一个for循环），共2个for循环; O(m*n) = 5*10 = 50
+    
+# List comprehension
+[item for item in items if item not in primes] # O(n*1)= 10*1 = 10
+
+# Filter 最快
+list(filter(lambda item: item not in primes, item)) # O(n*1) = 10
+
+----}
 
 
+{----min, max, in 也是O(n)，但对这类查找类型可以想见其结构不一定是最优的。代码实现如下：
 
-
-
-
-
-
-
-
+def in_(items, value):
+    for items in items:   
+        if item == value: # 如果第一个就是，那么时间复杂度为O(1)；若不存在，则会执行完整个for，为O(n)
+            return True
+    reuurn False
+    
+def min_(items):
+    current_min = items[0]
+    for item in items[1:]:
+        if current_min > item:
+            current_min = item
+    return current_min
+    
+def max_(items):
+    current_max = items[0]
+    for item in items[1:]
+        if current_max < item:
+            current_max = item
+    return current_max
+    
+in_(range(5), 3)
+min_(range(5))
+max_(range(5))
+        
+----}
 
 
 
