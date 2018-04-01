@@ -291,7 +291,7 @@ o_n(items)  # n = 10 operations
 o_n_squared(items)  # n*n = 10*10 = 100 operations
 ----}
 
-
+## List
 {----List，大部分方法的时间复杂度很低，比如append，get，set，len，为O(1)；但可能不曾留意remove 和insert 是O(n)，
 所以，要从1000个元素中删除1个，Python将遍历1000个项。其内部原理如下：
 
@@ -369,7 +369,69 @@ max_(range(5))
         
 ----}
 
+## Dict - 无序但快速映射
+{----字典的平均复杂度，像方法get，set，del，如我们期望的，为O(1)，但偶尔不是。
+字典的工作原理是，将key通过Hash function转换为hash值，存到hash table中。但会有2个问题。
+1，items 会按hash值来排列，大部分是随机的；2，hash collisions，那么get等操作的复杂度将为O(n)。
+Hash collisions 并不总发生，但会发生，当一个大字典执行效率低于平均时，那就是需要检查的问题所在。
 
+例，最简单的Hash function/algorithm：返回一个数的首位数字 √
 
+def most_significant(value)：
+    while value >= 10:
+        value //= 10
+    return value
+    
+most_significant(12345)
+most_significant(99)
+most_significant(0)
 
+至此，我们可以通过该Hasing method，即上面的函数，用a list of lists(列表为元素的列表)来枚举一个字典。
+我们的Hasing method 只返回0-9，所以我们的list只需要10个buckets。
+下面添加一些值，看看具体怎么work:
 
+def add(collection, key, value):
+    index = most_significant(key) # 字典的key 与列表的index 相联系
+    collection[index].append((key, value)) 
+    
+def contains(collection, key):   # collection 中是否含有某个key
+    index = most_significant(key)
+    for k, v in collection[index]:
+        if k == key:
+            return True
+    return False
+
+# Create a collection of 10 lists
+collection = [[], [], [], [], [], [], [], [], [], []]
+
+# Add some items, using key/value pairs
+add(collection, 123, 'a')
+add(collection, 456, 'b')
+add(collection, 789, 'c')
+add(collection, 101, 'd')
+>>>collection
+[[],
+[(123, 'a'),(101, 'd')],   # index = 1
+[],
+[],
+[(456, 'b')], # index = 4
+[],
+[], 
+[(789, 'c')], # index = 7
+[],
+[]]
+
+# Check if the [contains] works correctly
+contains(collection, 123) # True
+contrain(collection, 1)  # False
+
+以上代码并不全等同dict 的内部实现，但相当相似。比如要得到key=789的item (789:'c')，取index=7 的item 7即可，类似于dict.get(7)，
+这里只需检索index=7 (10 个中找1个）， 而不是key=789。
+大部分情况是n=1的O(1)，但如果找(101,'d')，则为O(n)。这就是一个hash collision.
+
+此外，删除字典中的items 并不会改变dict 所占的内存。copying and iterating 整个字典仍将花费O(m)，m是字典的最大size，
+而不是n--删除操作后的项数。因此，如果添加1000项到字典，再删除999项，iterating 和 copying操作仍将走1000 steps。
+唯一的解法是recreating 该字典，其内部会执行copy 和 insert 操作。
+注意，插入操作期间的重新创建 is not guarantedd，且依赖内部可用的空插槽数。
+
+----}
