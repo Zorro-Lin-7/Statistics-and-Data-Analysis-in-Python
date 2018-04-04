@@ -435,3 +435,35 @@ contrain(collection, 1)  # False
 注意，插入操作期间的重新创建 is not guarantedd，且依赖内部可用的空插槽数。
 
 ----}
+
+# Set – like a dict without values，也采用Hash method
+{----set 的交集、差集等运算的output生成函数：√
+
+def print_set(expression, set_):
+    'Print set as a string sorted by letters'
+    print(expression,''.join(sorted(set_)))
+    
+spam = set('spam')
+print_set('spam:',spam)
+eggs = set('eggs')
+eggs
+print_set('eggs:',eggs)
+
+√
+spam & eggs # 交集
+spam | eggs # 并级
+spam ^ eggs # 非交集
+spam - eggs # 差集
+spam > eggs # 包含，返回False
+
+例：用户许可系统，新老用户的区分增删
+current_users = set(('a','b','d')) # set 的参数要求是sequence，所以需要双括号
+new_users = set(('b','c','d','e'))
+to_insert = new_users - current_users
+sorted(to_insert)  # set 和dict 相似，不会预定排序
+to_delet = current_users - new_users
+sorted(to_delet)
+unchanged = new_users&current_users
+sorted(unchanged)
+
+----}
