@@ -467,3 +467,30 @@ unchanged = new_users&current_users
 sorted(unchanged)
 
 ----}
+
+# Tuple - 不可更改的list
+{----可哈希，所以可作字典的key，同时可嵌套多种类型
+spam = 1,'abc',(2,3,(4,5)),'def'
+eggs = 4,(spam,5),6
+data = dict()
+data[spam] = 'spam'
+data[eggs] = 'eggs'
+
+import pprint
+pprint.pprint(data) # 美观打印：格式一致，且排序 √
+
+# tuple packing: = 两边都是tuple
+a,b,c = 1,2,3
+spam = 1,(2,3)
+# tuple unpacking 从一个tuple里取出分给2个变量 √
+a,b = spam
+spam,*eggs = 1,2,3,4 # 如果uppack给一个长度可变的变量，那么将赋值为一个list而非tuple：eggs 为[2,3,4]
+a,b,c = eggs # 列表同样可以unpack
+spam,*eggs = range(10) # √
+a,b,*c = a,*eggs # 两边都行。
+
+def eggs(*args):    # 星号可理解为该变量（参数）为list √
+    print('args:',args)
+eggs(1,2,3)
+
+----}
