@@ -221,4 +221,5 @@ main()
 a = 'ABC'                                                               
 dir(a) 
 
-
+# collections.defaultdict
+https://www.jianshu.com/p/26df28b3bfc8
