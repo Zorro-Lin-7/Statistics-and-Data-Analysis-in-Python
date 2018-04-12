@@ -92,7 +92,52 @@ if __name__ == '__main__':
     main()
     
 
-    
+# 类的一大作用是，打包一团代码，避免spaghetti code 影响可读性。所以需要创建类。
+A class is essentially a method for packaging code. 
+The idea is to simplify code reuse, make applications more reliable, and reduce the potential for security breaches. 
+Well-designed classes are black boxes that accept certain inputs and provide specific outputs based on those inputs.
+
+
+# Creating the class definition
+A class need not be particularly complex. 
+In fact, you can create just the container and one class element and call it a class.
+
+class MyClass:
+    MyVar = 0
+
+MyInstance = Myclass()  # 创建实例需要加括号
+MyInstance.MyVar
+0
+
+# Creating class method
+class Myclass:
+    def SayHello():    # 该mehtod 不需要接收参数
+        print('Hello')
+        
+MyClass.SayHello()    # 可以直接执行，无需创建这个类的一个实例
+或者
+MyInstance = Myclass  # 创建的是类，无需括号
+MyInstance.SayHello()
+
+类方法只能处理类数据。它不知道与该类的实例相关联的任何数据。
+您可以将数据作为参数传递，并且该方法可以根据需要返回信息，但是它不能访问实例数据。
+因此在创建类方法时，需要小心谨慎，以确保它们本质上是自包含的。
+
+# Creating instance method 上面是类方法，这是实例的方法
+instance method 是单个实例的一部分。你通过instance method 来处理类管理的数据。
+因此，只有将类中的某个instance method 实例化为一个object 才能使用它
+
+class MyClass:
+    def SayHello(self):  # 所有实例方法都要有self参数，区分于类方法。SayHello方法不接受任何特殊参数也不返回任何值，仅仅print.
+        print('Hello')
+
+MyInstance = Myclass()  # 将类中的某个instance method 实例化为一个object，需要加括号
+MyInstance.SayHello()  
+
+self 指向应用程序用于操作数据的特定实例。
+如果没有self参数，该方法将不知道要使用哪个实例的数据。
+然而，self不被视为是一个可访问的参数-它的值由Python提供，且作为调用方法的一部分你不能改变它。  
+        
 -------------------------------------    
     
     
