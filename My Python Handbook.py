@@ -137,6 +137,33 @@ MyInstance.SayHello()
 self 指向应用程序用于操作数据的特定实例。
 如果没有self参数，该方法将不知道要使用哪个实例的数据。
 然而，self不被视为是一个可访问的参数-它的值由Python提供，且作为调用方法的一部分你不能改变它。  
+
+# Constructors “构造函数” __init__()
+Constructors 是一种method，一类特殊的method。
+Python什么时候调用这个method（constructor/function）？
+在类中定义了functions/methods，其中含有constructor，通过它来实例化一个object时。
+Python依靠constructor来执行一些任务，如初始化一些instance variable（即赋值）。
+Constructors能确保对象在启动时有资源可用。
+The name of a constructor 总是相同，为__init__() 。
+当必须创建某对象时，构造函数可以接收参数。
+当你创建一个没有constructor的类时，Python会自动为你创建一个 default constructor，它不做任何事。
+每个类都必须要有一个constructor，即使仅仅作为default constructor来依赖。
+
+class MyClass(object):
+    def __init__(self, Name = 'there'):
+        self.Greeting = Name
+    
+    def SayHello(self):
+        print("Hello {0}".format(self.Greeting)) # self，顾名思义，调用自身的属性特征（变量）
+        
+MyInstance = MyClass()    # 创建一个类的实例
+MyInstance.SayHello()     # Hello there 采用默认参数
+
+MyInstance2 = MyClass('Amy')    # 可以将__init__()看出隐形的，用于构造类本身的特征。创建实例时直接在类中传入参数'Amy'，相当于设置类自身的属性self.Greeting
+MyInstance2.SayHello()   # Hello Amy
+
+MyInstance.Greeting = "Harry"
+MyInstance.SayHello()    # Hello Harry
         
 -------------------------------------    
     
