@@ -164,6 +164,21 @@ MyInstance2.SayHello()   # Hello Amy
 
 MyInstance.Greeting = "Harry"
 MyInstance.SayHello()    # Hello Harry
+
+# 类中的变量
+变量是存储数据的容器。
+使用类时，需要考虑数据是如何存储与管理的。
+一个类可以同时含有class variables 和 instance variables。#The class variables are defined as part of the class itself, while instance variables are defined as part of the methods.
+class variables 被定义为类自身的一部分；
+instance variables 被定义为mehtods的一部分。
+# Creating 	class variables
+类变量是全局性的，提供给你的的类以某种方式操作数据的全局访问。
+大部分情况下，你可以使用constructor来初始化全局变量，使包含已知的值，从而可在之后被调用：
+
+class MyClass:
+    Greeting = ''
+    def SayHello(self):
+        print('Hello {0}'.format(self.Greeting))
         
 -------------------------------------    
     
