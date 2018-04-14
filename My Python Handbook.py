@@ -219,7 +219,35 @@ class MyClass(object):
             
 MyClass.PrintList1("Red", "Blue", "Green") # unnamed
 MyClass.PrintList2(George='Red', Sue='Blue', Zarah='Green')  # named
+
+# 函数重载 overloading operators 略
+通常创建类时继承object，可能出于重载考虑，避免了自己定义一些运算（如加减乘除）的麻烦。
+------------------------------------
+# 类的创建与存储：创建一个类置于外部的package，并在其他应用中访问调用它
+
+## 创建一个外部类：这里会阐述1个新的class feature--accessor 访问器。
+## 本质上，accessor提供对基础值（underlying value)对访问，包含getter和setter 2种。
+## 以下使用2种方法的组合，使你能确认input的 type 和range的正确性，以及验证调用者有权看到这些信息。
+class MyClass:
+    def __init__(self, Name='Sam', Age=32）：# 创建一个有2个实例变量的object
+        self.Name = Name    # 初始化实例变量
+        self.Age = Age
         
+    def GetName(self):    # getter，提供对underlying value 的read-only 的access
+        return self.Name
+        
+    def SetName(self, Name): # setter，提供对基础值的write-only的访问接口
+        self.Name = Name
+        
+    def GetAge(self):
+        return self.Age
+    
+    def SetAge(self, Age):
+        self.Age = Age
+        
+    def __str__(self):    # 如果要让其他人也能print the object，需要在类中定义__str__() method，它是被print函数访问的，即定义print的格式
+        return "{0} is aged {1}.".format(self.Name, self.Age)
+
 -------------------------------------    
     
     
