@@ -229,7 +229,7 @@ MyClass.PrintList2(George='Red', Sue='Blue', Zarah='Green')  # named
 ## 本质上，accessor提供对基础值（underlying value)对访问，包含getter和setter 2种。
 ## 以下使用2种方法的组合，使你能确认input的 type 和range的正确性，以及验证调用者有权看到这些信息。
 class MyClass:
-    def __init__(self, Name='Sam', Age=32）：# 创建一个有2个实例变量的object
+    def __init__(self, Name='Sam', Age=32）：# 创建一个有2个实例变量的object，具体用法见下文
         self.Name = Name    # 初始化实例变量
         self.Age = Age
         
@@ -246,7 +246,21 @@ class MyClass:
         self.Age = Age
         
     def __str__(self):    # 如果要让其他人也能print the object，需要在类中定义__str__() method，它是被print函数访问的，即定义print的格式
-        return "{0} is aged {1}.".format(self.Name, self.Age)
+        return "{0} is aged {1}.".format(self.Name, self.Age)    # 具体用法见下文
+                 
+# Using the class in an Applicaiton 假设上述类存为文件BPPD_15_MyClass.py
+import BPPD_15_MyClass    # 注意是导入BPPD_15_MyClass（package name，即.py文件名），而不是直接导入类名 MyClass。单个package 可以包含多个类
+SamsRecord = BPPD_15_MyClass.MyClass()  # 无参数创建 MyClass object，则该object有的就是类默认的自身的属性和方法，即__init__()的部分，即self部分。
+                                        # package name 在前，类名在后
+AmysRecord = BPPD_15_MyClass.MyClass("Amy", 44) # 传入给定参数，则参数对应的就是__init__()定义的self属性和方法
+print(SamsRecord.GetAge())     # 假想应用场景，Sam长了一岁，验证后，下面更新
+SamsRecord.SetAge(33)
+print(AmysRecord.GetName())    # 假想，HR拼错了Aimee的名字
+AmysRecord.SetName("Aimee")
+print(SamsRecord) # 输出的是Sam is aged 33
+print(AmysRecord) # 若不用print，而是直接SamsRecord，则输出的是<BPPD_15_MyClass.MyClass at 0x102fbba58> —— __str__() 的作用
+                 
+
 
 -------------------------------------    
     
