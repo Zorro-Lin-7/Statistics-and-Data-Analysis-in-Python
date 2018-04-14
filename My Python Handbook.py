@@ -178,7 +178,47 @@ instance variables 被定义为mehtods的一部分。
 class MyClass:
     Greeting = ''
     def SayHello(self):
-        print('Hello {0}'.format(self.Greeting))
+        print('Hello {0}'.format(self.Greeting)) # 注意这里的self.Greeting 与类（全局）变量不一样
+        
+MyClass.Greeting = "Zelda"  # 类变量可变
+MyClass.Greeting    # 属性不用加括号
+
+MyInstance = MyClass()
+MyInstance.SayHello()  # 方法需要加括号
+
+此例不包含constructor。正常来说，你当包含一个constructor来初始化class varialbe，即保证它有个合适的初始值。
+
+以上，避免使用类变量，因为可变，在应用中可能被篡改；永远要做的：在constructor中给类变量赋值。√
+
+# Creating Instance variables
+Instance variables 总是被定义为method 的一部分（在定义method/function时同时定义）。
+一个method的input arguments 被视为instance variables，因为它们仅当该methdo存在时才存在。
+使用instance variables 比class variables 安全，因为更容易维护对他们的控制，并确保调用者提供正确的input。
+
+class MyClass:
+    def DoAdd(self, Value1=0, Value2=0):
+        Sum = Value1 + Value2
+        print("The sum of {0} plus {1} is {3}".format(Value1, Value2, Sum))
+        
+此例含3个instance variables：The input arguments:Value1, Value2，给定默认值0，那么当用户忘了提供
+输入值时，DoAdd不会失效；第3个是Sum.
+
+MyInstance = MyClass()
+MyInstance.DoAdd(1, 4)
+
+# Using methods with variable argument lists
+有时创建一个method要求参数数量可变：
+
+class MyClass(object):
+    def PrintList1(*args):    # *args，列表，里面是unnamed arguments；参数名规约用args,kwargs，当然也可以用其他的，只要在前面加星号
+        for Count, Item in enumerate(args):
+            print("{0}. {1}".format(Count, Item))
+    def PrintList2(**kwargs): # **kwargs，字典，里面是named arguments
+        for Name, Value in kwargs.items():  # kwargs.items()  因为是字典；
+            print("{0} likes {1}".format(Name, Value))
+            
+MyClass.PrintList1("Red", "Blue", "Green") # unnamed
+MyClass.PrintList2(George='Red', Sue='Blue', Zarah='Green')  # named
         
 -------------------------------------    
     
