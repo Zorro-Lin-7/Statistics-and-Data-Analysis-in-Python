@@ -507,3 +507,8 @@ index = pd.date_range('10/1/1999',periods=1100) # periods 是天数
                              
 # np.where
 df['C'] = np.where(df['A'] > df['B'], 'a','b')
+
+# 文件太大，分块读取，分块遍历及运算
+pd.read_csv( ,chunksize=100)
+       
+       
