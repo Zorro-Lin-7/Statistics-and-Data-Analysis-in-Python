@@ -335,6 +335,8 @@ np.cos()
 '{0:*>20.2f}'.format(3.14159)
 
 # 布尔值：空串、零值、零序列都为False，其他为True
+int(True)  # 1
+int(False) # 0
 
 # 函数定义
 # 可以没有return语句。被调用时，执行函数body，比如print语句。 √
