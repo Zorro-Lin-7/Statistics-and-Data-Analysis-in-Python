@@ -138,3 +138,7 @@ plt.show()
 		  
 # √ 横轴是日期
 plt.plot_date(date,data)
+		  
+# √ 将 x轴 y轴改为对数标度
+pylab.semilogx()
+pylab.semilogy()
